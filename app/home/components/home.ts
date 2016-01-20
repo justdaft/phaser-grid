@@ -9,36 +9,46 @@ import {Component} from 'angular2/core';
     templateUrl: './home/components/home.html',
     styleUrls: ['./home/components/home.css']
 })
-export class HomeCmp  {
+export class HomeCmp {
     game: Phaser.Game;
-    textValue: Phaser.Text;
     load: any;
-    // titleScreenImage: any;
+    textValue: Phaser.Text;
+    backgroundSprite: any;
+    updateCount: number;
+    bgData: any = 'data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAABHNCSVQICAgIfAhkiAAAAFFJREFUWIXtzjERACAQBDFgMPOKzr8ScADFFlBsFKRX1WqfStLG68SNQcogZZAySBmkDFIGKYOUQcogZZAySBmkDFIGKYOUQcog9X1wJnl9ONrTcwPWLGFOywAAAABJRU5ErkJggg==';
+
     img: Phaser.Image;
     constructor() {
-        this.game = new Phaser.Game (500, 500, Phaser.AUTO, 'content', {
+        this.game = new Phaser.Game(500, 500, Phaser.AUTO, 'content', {
             create: this.create,
             preload: this.preload,
-            update: this.update
+            update: this.update,
+            render: this.render
         });
-        // this.load.image('phaser-logo', '/phaser-logo.png');
-        // var img = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'phaser-logo.png');
-        // img.anchor.x = 0.5;
-        // img.anchor.y = 0.5;
     }
-
     preload() {
+        let iBg = new Image();
+        iBg.src = this.bgData;
+        this.game.cache.addImage('bg', this.bgData, iBg);
         this.game.load.image('phaser-logo', 'phaser-logo.png');
     };
     create() {
+        this.backgroundSprite = this.game.add.tileSprite(0,0,500,500,'bg');
+        let style = { font: '36px Arial', fill: '#808080', align: 'center' };
+        this.textValue = this.game.add.text(0, 0, '0', style);
+        this.updateCount = 0;
         this.img = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'phaser-logo');
         this.img.anchor.x = 0.5;
         this.img.anchor.y = 0.5;
-        this.img.angle = 45;
     };
 
     update() {
         this.img.angle += 0.1;
+        this.textValue.text = (this.updateCount++).toString();
+    }
+
+    render() {
+        this.game.debug.text('This is drawn in render()', 0, 50);
     }
 
 }
