@@ -3,7 +3,7 @@
 
 import {Component} from 'angular2/core';
 //import {InitTiles} from './utils';
-import {updateTimer, createTimer, incrementScore, createTile, addTile, initTiles} from './func';
+//import {updateTimer, createTimer, incrementScore, createTile, addTile, initTiles} from './func';
 
 @Component({
     selector: 'home',
@@ -48,52 +48,9 @@ export class HomeCmp {
     };
 
     create() {
-        this.tileTypes = [
-            'blue',
-            'green',
-            'red',
-            'yellow'
-        ];
-        //Keep track of the users score
-        this.score = 0;
-
-        //Keep track of the tiles the user is trying to swap (if any)
-        this.activeTile1 = null;
-        this.activeTile2 = null;
-
-        //Controls whether the player can make a move or not
-        this.canMove = false;
-
-        //Grab the weigh and height of the tiles (assumes same size for all tiles)
-        this.tileWidth = 200;
-        this.tileHeight = 200;
-
-        //This will hold all of the tile sprites
-        this.tiles = this.game.add.group();
-
-        //Initialise tile grid, this array will hold the positions of the tiles
-        //Create whatever shape you'd like
-        this.tileGrid = [
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-        ];
-
-        //Create a random data generator to use later
-        let seed = Date.now();
-        console.log(seed);
-        this.random = new Phaser.RandomDataGenerator([seed]);
         let style = { font: '36px Arial', fill: '#808080', align: 'center' };
         this.textValue = this.game.add.text(0, 0, '0', style);
         this.updateCount = 0;
-        
-        initTiles();
-        
         this.img = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'phaser-logo');
         this.img.anchor.x = 0.5;
         this.img.anchor.y = 0.5;
