@@ -96,8 +96,8 @@ function swapTiles() {
         me.tileGrid[tile2Pos.x][tile2Pos.y] = me.activeTile1;
 
         //Actually move them on the screen
-        me.game.add.tween(me.activeTile1).to({ x: tile2Pos.x * me.tileWidth + (me.tileWidth / 2), y: tile2Pos.y * me.tileHeight + (me.tileHeight / 2) }, 200, Phaser.Easing.Linear.In, true);
-        me.game.add.tween(me.activeTile2).to({ x: tile1Pos.x * me.tileWidth + (me.tileWidth / 2), y: tile1Pos.y * me.tileHeight + (me.tileHeight / 2) }, 200, Phaser.Easing.Linear.In, true);
+        me.game.add.tween(me.activeTile1).to({ x: tile2Pos.x * me.tileWidth + (me.tileWidth / 2), y: tile2Pos.y * me.tileHeight + (me.tileHeight / 2) }, 200, Phaser.Easing.Linear.None, true);
+        me.game.add.tween(me.activeTile2).to({ x: tile1Pos.x * me.tileWidth + (me.tileWidth / 2), y: tile1Pos.y * me.tileHeight + (me.tileHeight / 2) }, 200, Phaser.Easing.Linear.None, true);
 
         me.activeTile1 = me.tileGrid[tile1Pos.x][tile1Pos.y];
         me.activeTile2 = me.tileGrid[tile2Pos.x][tile2Pos.y];
