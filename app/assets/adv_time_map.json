@@ -1,0 +1,66 @@
+{ "height":4,
+ "layers":[
+        {
+         "data":"CwAAAAIAAAAEAAAABwAAAA0AAAABAAAABAAAAAkAAAACAAAABwAAAA0AAAAGAAAABgAAAAkAAAALAAAAAQAAAA==",
+         "encoding":"base64",
+         "height":4,
+         "name":"Tile Layer 1",
+         "opacity":1,
+         "id": 1,
+         "properties":
+            {
+             "gid":"1"
+            },
+         "type":"tilelayer",
+         "visible":true,
+         "width":4,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":"BQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAAUAAAAFAAAABQAAAA==",
+         "encoding":"base64",
+         "height":4,
+         "name":"Tile Layer 2",
+         "opacity":1,
+         "id": 2,
+         "properties":
+            {
+             "gid":"2"
+            },
+         "type":"tilelayer",
+         "visible":true,
+         "width":4,
+         "x":0,
+         "y":0
+        }],
+ "nextobjectid":1,
+ "orientation":"orthogonal",
+ "properties":
+    {
+
+    },
+ "renderorder":"right-down",
+ "tileheight":146,
+ "tilesets":[
+        {
+         "columns":5,
+         "firstgid":1,
+         "image":"matching.png",
+         "imageheight":438,
+         "imagewidth":730,
+         "margin":0,
+         "name":"adv_time_tileset",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tilecount":15,
+         "tileheight":146,
+         "tilewidth":146
+        }],
+ "tilewidth":146,
+ "version":1,
+ "width":4
+}

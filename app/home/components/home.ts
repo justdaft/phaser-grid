@@ -31,7 +31,7 @@ export class HomeCmp {
     tile: Phaser.Sprite;
 
     constructor() {
-        this.game = new Phaser.Game(800, 800, Phaser.AUTO, 'content', {
+        this.game = new Phaser.Game(584, 584, Phaser.AUTO, 'content1', {
             create: this.create,
             preload: this.preload,
             update: this.update,
@@ -42,82 +42,97 @@ export class HomeCmp {
     preload() {
         this.game.load.image('phaser-logo', './assets/phaser-logo.png');
 
-        this.game.load.image('blue', './assets/gemBlue.png');
-        this.game.load.image('green', './assets/gemGreen.png');
-        this.game.load.image('red', './assets/gemRed.png');
-        this.game.load.image('yellow', './assets/gemYellow.png');
+        // this.game.load.image('blue', './assets/gemBlue.png');
+        // this.game.load.image('green', './assets/gemGreen.png');
+        // this.game.load.image('red', './assets/gemRed.png');
+        // this.game.load.image('yellow', './assets/gemYellow.png');
+        this.game.load.image('tiles', './assets/matching.png');
+        this.game.load.tilemap('adv_time', 'assets/adv_time_map.json', null, Phaser.Tilemap.TILED_JSON);
     };
 
     create() {
         //this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.stage.backgroundColor = '34495f';
- 
-        //Declare assets that will be used as tiles
-        this.tileTypes = [
-            'blue',
-            'green',
-            'red',
-            'yellow'
-        ];
- 
-        //Keep track of the users score
-        this.score = 0;
- 
-        //Keep track of the tiles the user is trying to swap (if any)
-        this.activeTile1 = null;
-        this.activeTile2 = null;
- 
-        //Controls whether the player can make a move or not
-        this.canMove = false;
- 
-        //Grab the weigh and height of the tiles (assumes same size for all tiles)
-        this.tileWidth = 160;
-        this.tileHeight = 140;
- 
-        //This will hold all of the tile sprites
-        this.tiles = this.game.add.group();
- 
-        //Initialise tile grid, this array will hold the positions of the tiles
-        //Create whatever shape you'd like
-        this.tileGrid = [
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null]
-        ];
-        //Create a random data generator to use later
-        let seed = Date.now();
-        let random = new Phaser.RandomDataGenerator([seed]);
-        let enemies = this.game.add.group();
 
-        for (let x = 0; x < 8; x++) {
-            //  This creates a new Phaser.Sprite instance within the group
-            //  It will be randomly placed within the world and use the 'baddie' image to display
-            //enemies.create((0.5 * i), 0.5, 'blue');
-            for (let y = 0; y < 8; y++) {
-                let tile = enemies.create(((x * this.tileWidth) + this.tileWidth / 2), (y *  this.tileHeight +( this.tileHeight / 2)), 'blue');
-                enemies.scale.setTo(0.5,0.5);
-                tile.anchor.setTo(0.5, 0.5);
-                //Keep a track of the tiles position in our tileGrid
-				this.tileGrid[x][y] = tile;
-            }
+        let map = this.game.add.tilemap('adv_time');
+
+        //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
+        //  The second parameter maps this name to the Phaser.Cache key 'tiles'
+        map.addTilesetImage('adv_time_tileset', 'tiles', 146, 146, 1);
+    
+        //  Creates a layer from the World1 layer in the map data.
+        //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
+        let layer1 = map.createLayer('Tile Layer 1');
+      
+
+        //  This resizes the game world to match the layer dimensions
+        layer1.resizeWorld();
+        // //Declare assets that will be used as tiles
+        // this.tileTypes = [
+        //     'blue',
+        //     'green',
+        //     'red',
+        //     'yellow'
+        // ];
+ 
+        // //Keep track of the users score
+        // this.score = 0;
+ 
+        // //Keep track of the tiles the user is trying to swap (if any)
+        // this.activeTile1 = null;
+        // this.activeTile2 = null;
+ 
+        // //Controls whether the player can make a move or not
+        // this.canMove = false;
+ 
+        // //Grab the weigh and height of the tiles (assumes same size for all tiles)
+        this.tileWidth = 146;
+        this.tileHeight = 146;
+ 
+        // //This will hold all of the tile sprites
+        // this.tiles = this.game.add.group();
+ 
+        // //Initialise tile grid, this array will hold the positions of the tiles
+        // //Create whatever shape you'd like
+        // this.tileGrid = [
+        //     [null, null, null, null, null, null, null, null],
+        //     [null, null, null, null, null, null, null, null],
+        //     [null, null, null, null, null, null, null, null],
+        //     [null, null, null, null, null, null, null, null],
+        //     [null, null, null, null, null, null, null, null],
+        //     [null, null, null, null, null, null, null, null],
+        //     [null, null, null, null, null, null, null, null],
+        //     [null, null, null, null, null, null, null, null]
+        // ];
+        // //Create a random data generator to use later
+        // let seed = Date.now();
+        // let random = new Phaser.RandomDataGenerator([seed]);
+        // let enemies = this.game.add.group();
+
+        // for (let x = 0; x < 8; x++) {
+        //     //  This creates a new Phaser.Sprite instance within the group
+        //     //  It will be randomly placed within the world and use the 'baddie' image to display
+        //     //enemies.create((0.5 * i), 0.5, 'blue');
+        //     for (let y = 0; y < 8; y++) {
+        //         let tile = enemies.create(((x * this.tileWidth) + this.tileWidth / 2), (y *  this.tileHeight +( this.tileHeight / 2)), 'blue');
+        //         enemies.scale.setTo(0.5,0.5);
+        //         tile.anchor.setTo(0.5, 0.5);
+        //         //Keep a track of the tiles position in our tileGrid
+        // 		this.tileGrid[x][y] = tile;
+        //     }
             
-        }
+        // }
  
-
+// 01412320911 tracey
         // let style = { font: '36px Arial', fill: '#808080', align: 'center' };
         // this.textValue = this.game.add.text(0, 0, '0', style);
         // this.updateCount = 0;
-        // this.img = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'phaser-logo');
+        // this.img = this.game.add.sprite(0, 0, 'phaser-logo');
         // this.img.anchor.x = 0.5;
         // this.img.anchor.y = 0.5;
 
 
-        console.log(this.tileGrid);
+        //  console.log(this.tileGrid);
     };
 
 
