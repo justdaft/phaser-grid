@@ -5,27 +5,7 @@ import {Component} from 'angular2/core';
 //import {InitTiles} from './utils';
 //import {updateTimer, createTimer, incrementScore, createTile, addTile, initTiles} from './func';
 
-function extractedFor(tileTypes: string[], random: Phaser.RandomDataGenerator) {
-  for (let x = 0; x < 8; x++) {
-    for (let y = 0; y < 8; y++) {
-      //Choose a random tile to add
-      let tileToAdd = tileTypes[random.integerInRange(0, tileTypes.length - 1)];
-      let tile = this.tiles.create(((x * this.tileWidth) + this.tileWidth / 2), (y * this.tileHeight + (this.tileHeight / 2)), tileToAdd);
-      this.tiles.scale.setTo(0.5, 0.5);
-      tile.anchor.setTo(0.5, 0.5);
-      //Enable input on the tile
-      tile.inputEnabled = true;
 
-      //  pick the right one accordingly.
-      tile.input.pixelPerfectOver = true;
-
-      //  Enable the hand cursor
-      tile.input.useHandCursor = true;
-      //Keep a track of the tiles position in our tileGrid
-      this.tileGrid[x][y] = tile;
-    }
-  }
-}
 @Component({
   selector: 'home',
   templateUrl: './home/components/home.html',
@@ -53,11 +33,7 @@ export class HomeCmp {
   tile: Phaser.Sprite;
 
   constructor() {
-<<<<<<< Updated upstream
-    this.game = new Phaser.Game(584, 584, Phaser.AUTO, 'content1', {
-=======
-        this.game = new Phaser.Game(800, 600, Phaser.AUTO, 'content', {
->>>>>>> Stashed changes
+    this.game = new Phaser.Game(584, 584, Phaser.AUTO, 'content', {
       create: this.create,
       preload: this.preload,
       update: this.update,
@@ -73,144 +49,110 @@ export class HomeCmp {
     // this.game.load.image('red', './assets/gemRed.png');
     // this.game.load.image('yellow', './assets/gemYellow.png');
     this.game.load.image('tiles', './assets/matching.png');
-    this.game.load.tilemap('adv_time', './assets/adv_time_map.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap('adv_time', './assets/new_adv_time_map_v1.json', null, Phaser.Tilemap.TILED_JSON);
+
   };
 
   create() {
-    //this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.stage.backgroundColor = '34495f';
-
-<<<<<<< Updated upstream
     let map = this.game.add.tilemap('adv_time');
-
-    //  The first parameter is the tileset name, as specified in the Tiled map editor (and in the tilemap json file)
-    //  The second parameter maps this name to the Phaser.Cache key 'tiles'
     map.addTilesetImage('adv_time_tileset', 'tiles', 146, 146, 1);
+    let covers = this.game.add.group();
+    let items = this.game.add.group();
 
-    //  Creates a layer from the World1 layer in the map data.
-    //  A Layer is effectively like a Phaser.Sprite, so is added to the display list.
-    let layer1 = map.createLayer('Tile Layer 1');
+    //map.createFromObjects('Object_Layer_1', 5, 'tiles', 0, true, false, covers);
+    let tilelayer1 = map.createLayer('Tile_Layer_1');
+    let tilelayer2 = map.createLayer('Tile_Layer_2');
+    tilelayer2.visible = false;
+    tilelayer1.resizeWorld();
 
 
+    // let objectlayer = map.createLayer('Object_Layer_1');
+    //map.createFromObjects('Object_Layer_1', null, 'covers', 0, true, false, cover);
+
+    //let xx = findObjectsByType('cover', map, 'Object_Layer_1');
+
+    function findObjectsByType(type:any, map:any, layer:any) {
+      let result: Array<any> = [];
+      map.objects[layer].forEach(function (element) {
+        console.log('findObjectsByType, element: ', element);
+
+          console.log('Found ' + element.name);
+          element.y -= map.tileHeight;
+          result.push(element);
+
+      });
+      return result;
+    }
+
+   // console.log(findObjectsByType('cover', map, 'Object_Layer_1'));
+
+    function createFromTiledObject (element) {
+      let sprite = items.create(element.x, element.y);
+      console.log(sprite);
+    }
+
+    function createItems() {
+      // create items
+      var item;
+      let result = findObjectsByType('cover', map, 'Object_Layer_1');
+      result.forEach((element) => { createFromTiledObject(element, this.covers);});
+    }
+
+    createItems();
+
+
+    //let objectlayer = map.createLayer('Object_Layer_1');
     //  This resizes the game world to match the layer dimensions
-    layer1.resizeWorld();
-    // //Declare assets that will be used as tiles
-    // this.tileTypes = [
-    //     'blue',
-    //     'green',
-    //     'red',
-    //     'yellow'
-    // ];
-
-    // //Keep track of the users score
-    // this.score = 0;
-
-    // //Keep track of the tiles the user is trying to swap (if any)
-    // this.activeTile1 = null;
-    // this.activeTile2 = null;
-
-    // //Controls whether the player can make a move or not
-    // this.canMove = false;
-
-    // //Grab the weigh and height of the tiles (assumes same size for all tiles)
-    this.tileWidth = 146;
-    this.tileHeight = 146;
-
-    // //This will hold all of the tile sprites
-    // this.tiles = this.game.add.group();
-
-    // //Initialise tile grid, this array will hold the positions of the tiles
-    // //Create whatever shape you'd like
-    // this.tileGrid = [
-    //     [null, null, null, null, null, null, null, null],
-    //     [null, null, null, null, null, null, null, null],
-    //     [null, null, null, null, null, null, null, null],
-    //     [null, null, null, null, null, null, null, null],
-    //     [null, null, null, null, null, null, null, null],
-    //     [null, null, null, null, null, null, null, null],
-    //     [null, null, null, null, null, null, null, null],
-    //     [null, null, null, null, null, null, null, null]
-    // ];
-    // //Create a random data generator to use later
-    // let seed = Date.now();
-    // let random = new Phaser.RandomDataGenerator([seed]);
-    // let enemies = this.game.add.group();
-
-    // for (let x = 0; x < 8; x++) {
-    //     //  This creates a new Phaser.Sprite instance within the group
-    //     //  It will be randomly placed within the world and use the 'baddie' image to display
-    //     //enemies.create((0.5 * i), 0.5, 'blue');
-    //     for (let y = 0; y < 8; y++) {
-    //         let tile = enemies.create(((x * this.tileWidth) + this.tileWidth / 2), (y *  this.tileHeight +( this.tileHeight / 2)), 'blue');
-    //         enemies.scale.setTo(0.5,0.5);
-    //         tile.anchor.setTo(0.5, 0.5);
-    //         //Keep a track of the tiles position in our tileGrid
-    // 		this.tileGrid[x][y] = tile;
-    //     }
-
-    // }
-
-    // 01412320911 tracey
-=======
-        //Declare assets that will be used as tiles
-        let tileTypes = [
-            'blue',
-            'green',
-            'red',
-            'yellow'
-        ];
-
-        //Keep track of the users score
-        this.score = 0;
-
-        //Keep track of the tiles the user is trying to swap (if any)
-        this.activeTile1 = null;
-        this.activeTile2 = null;
-
-        //Controls whether the player can make a move or not
-        this.canMove = false;
-
-        //Grab the weigh and height of the tiles (assumes same size for all tiles)
-        this.tileWidth = 160;
-        this.tileHeight = 140;
-
-        //This will hold all of the tile sprites
-        this.tiles = this.game.add.group();
-
-        //Initialise tile grid, this array will hold the positions of the tiles
-        //Create whatever shape you'd like
-        this.tileGrid = [
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null],
-            [null, null, null, null, null, null, null, null]
-        ];
-        //Create a random data generator to use later
-        let seed = Date.now();
-        let random = new Phaser.RandomDataGenerator([seed]);
-        this.game.input.mouse.capture = true;
-      extractedFor.call(this, tileTypes, random);
 
 
->>>>>>> Stashed changes
-    // let style = { font: '36px Arial', fill: '#808080', align: 'center' };
-    // this.textValue = this.game.add.text(0, 0, '0', style);
-    // this.updateCount = 0;
-    // this.img = this.game.add.sprite(0, 0, 'phaser-logo');
-    // this.img.anchor.x = 0.5;
-    // this.img.anchor.y = 0.5;
 
-<<<<<<< Updated upstream
+    //this.tileWidth = 146;
+    //this.tileHeight = 146;
+    ////Declare assets that will be used as tiles
+    //let tileTypes = [
+    //  'blue',
+    //  'green',
+    //  'red',
+    //  'yellow'
+    //];
+    //
+    ////Keep track of the users score
+    //this.score = 0;
+    //
+    ////Keep track of the tiles the user is trying to swap (if any)
+    //this.activeTile1 = null;
+    //this.activeTile2 = null;
+    //
+    ////Controls whether the player can make a move or not
+    //this.canMove = false;
+    //
+    ////Grab the weigh and height of the tiles (assumes same size for all tiles)
+    //this.tileWidth = 160;
+    //this.tileHeight = 140;
+    //
+    ////This will hold all of the tile sprites
+    //this.tiles = this.game.add.group();
+    //
+    ////Initialise tile grid, this array will hold the positions of the tiles
+    ////Create whatever shape you'd like
+    //this.tileGrid = [
+    //  [null, null, null, null, null, null, null, null],
+    //  [null, null, null, null, null, null, null, null],
+    //  [null, null, null, null, null, null, null, null],
+    //  [null, null, null, null, null, null, null, null],
+    //  [null, null, null, null, null, null, null, null],
+    //  [null, null, null, null, null, null, null, null],
+    //  [null, null, null, null, null, null, null, null],
+    //  [null, null, null, null, null, null, null, null]
+    //];
+    ////Create a random data generator to use later
+    //let seed = Date.now();
+    //let random = new Phaser.RandomDataGenerator([seed]);
+    //this.game.input.mouse.capture = true;
 
-    //  console.log(this.tileGrid);
-=======
-        console.log(this.tileGrid);
->>>>>>> Stashed changes
-  };
+
+  }
 
 
   update() {

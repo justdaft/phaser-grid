@@ -64,7 +64,7 @@ export const DEV_NPM_DEPENDENCIES: InjectableDependency[] = normalizeDependencie
   { src: 'angular2/bundles/router.js', inject: 'libs', dest: JS_DEST },
   { src: 'angular2/bundles/http.js', inject: 'libs', dest: JS_DEST },
   { src: 'phaser/dist/phaser.js', inject: 'libs', dest: JS_DEST },
-  { src: 'phaser/dist/phaser.min.js', inject: 'libs', dest: JS_DEST },
+  //{ src: 'phaser/dist/phaser.min.js', inject: 'libs', dest: JS_DEST },
   { src: 'bootstrap/dist/css/bootstrap.css', inject: true, dest: CSS_DEST }
 ]);
 
